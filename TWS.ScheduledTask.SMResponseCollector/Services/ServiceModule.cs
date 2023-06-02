@@ -19,14 +19,14 @@ namespace TWS.ScheduledTask.SMResponseCollector.Services
     {
         public override void Load()
         {
-            //string con = ConfigurationManager.ConnectionStrings[0].ConnectionString;
+            var connectionString = ConfigurationManager.AppSettings["connectionstring"];
 
             Bind<IIntegrationService>().To<SurveyResponseCollectorLoadService>().InSingletonScope();
             Bind<IRepository>().To<SurveyMonkeyRepository>().InSingletonScope();
             Bind<SurveyMonkeyClient>().ToSelf().InSingletonScope();
             Bind<SurveyMonkeyApiEndpoints>().ToSelf().InSingletonScope();
             
-            Bind<ISqlConnectionFactory>().ToMethod(x => new SqlConnectionFactory("server=LUIS-SURFACE; database=affirstv2; Integrated Security=SSPI;trusted_connection=true;encrypt=false"));
+            Bind<ISqlConnectionFactory>().ToMethod(x => new SqlConnectionFactory(connectionString));
 
         }
     }

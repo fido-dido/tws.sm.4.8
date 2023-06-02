@@ -17,9 +17,8 @@ namespace TWS.ScheduledTask.SurveyMonkey
         {
             try
             {
-                Logger.Info("Hello world");
+                Logger.Info("Start Main");
 
-                var connectionString = ConfigurationManager.ConnectionStrings[0].ConnectionString;
 
                 var kernel = new StandardKernel(new ServiceModule());
                 var _service = kernel.Get<SurveyLoadService>();
