@@ -289,31 +289,8 @@ namespace TWS.ScheduledTask.SurveyMonkey.HttpClients
 
         }
 
-        //public async Task<SurveResponse> GetSurveyResponses(string surveyId, CancellationToken cancellationToken)
-        //{
-        //    var request = new HttpRequestMessage(HttpMethod.Get, $"/{_clientOptions.ApiVersion}/{_apiEndpoints.SurveyReponse.Replace("{id}", surveyId.ToString())}");
-        //    request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-        //    using (var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken))
-        //    {
-        //        var stream = await response.Content.ReadAsStreamAsync();
-
-        //        if (!response.IsSuccessStatusCode)
-        //        {
-        //            var error = stream.ReadAndDeserializeFromJson();
-        //            _logger.Error("Error: {error}\n when calling {req}:", error, request);
-        //            return default(SurveResponse);
-        //        }
-
-        //        response.EnsureSuccessStatusCode();
-        //        _logger.Info("GetSurveyResponses {@req}", request);
-
-        //        return stream.ReadAndDeserializeFromJson<SurveResponse>();
-        //    }
-        //}
-
-        private string SetRequestDateParams() => $"start_modified_at={_apiEndpoints.SurveyStartModifiedAt}&end_modified_at={_apiEndpoints.SurveyEndModifiedAt}";
-        private string SetRequestPageParams(int currentPage) => $"per_page={_apiEndpoints.SurveysPerPageParam}&page={currentPage}";
+        private string SetRequestDateParams() { return $"start_modified_at={_apiEndpoints.SurveyStartModifiedAt}&end_modified_at={_apiEndpoints.SurveyEndModifiedAt}"; }
+        private string SetRequestPageParams(int currentPage) { return $"per_page={_apiEndpoints.SurveysPerPageParam}&page={currentPage}"; }
 
         private string GetRequestDateRangeByNumDays()
         {

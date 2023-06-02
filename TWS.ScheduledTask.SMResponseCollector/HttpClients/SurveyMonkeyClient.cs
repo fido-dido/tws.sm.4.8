@@ -122,8 +122,8 @@ namespace TWS.ScheduledTask.SMResponseCollector.HttpClients
             return null;
         }
 
-        private string SetRequestDateParams() => $"start_modified_at={_apiEndpoints.SurveyStartModifiedAt}&end_modified_at={_apiEndpoints.SurveyEndModifiedAt}";
-        private string SetRequestPageParams(int currentPage) => $"per_page={_apiEndpoints.SurveysPerPageParam}&page={currentPage}";
+        private string SetRequestDateParams() { return $"start_modified_at={_apiEndpoints.SurveyStartModifiedAt}&end_modified_at={_apiEndpoints.SurveyEndModifiedAt}";  }
+        private string SetRequestPageParams(int currentPage) { return $"per_page={_apiEndpoints.SurveysPerPageParam}&page={currentPage}"; }
         private string GetRequestDateRangeByNumDays()
         {
             string result = string.Empty;

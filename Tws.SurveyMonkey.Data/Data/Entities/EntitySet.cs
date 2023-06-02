@@ -13,8 +13,12 @@ namespace Tws.SurveyMonkey.Data.Entities
         protected readonly string InsertSql;
         private readonly string _loadSql;
         protected IDictionary<long, T> KeyedDictionary = new Dictionary<long, T>();
-        public ICollection<T> Entities => KeyedDictionary.Values;
-       private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        //public ICollection<T> Entities => KeyedDictionary.Values;
+        //        protected IDbConnection Connection => _connectionFactory.CreateConnection();
+
+        public ICollection<T> Entities { get { return KeyedDictionary.Values; } }
+        public IDbConnection Connection { get { return _connectionFactory.CreateConnection();  } }
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public EntitySet(ISqlConnectionFactory connectionFactory, string insertSql, string loadSql)
         {
@@ -23,7 +27,6 @@ namespace Tws.SurveyMonkey.Data.Entities
             this._loadSql = loadSql;
         }
 
-        protected IDbConnection Connection => _connectionFactory.CreateConnection();
 
         public async Task<T> Item(int id)
         {

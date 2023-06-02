@@ -23,8 +23,6 @@ namespace Tws.SurveyMonkey.Data.Data
         CollectorRecipientSet CollectorRecipientSet { get; }    
         Task LoadSurveyMonkeyEntities();
 
-        Task InsertResponses(IEnumerable<SMResponse> responses);
-
         Task MergeSMResponse(SMResponse smResponse);
         Task MergeSMMessage(SMMessage smMessage);
     }
@@ -76,15 +74,6 @@ namespace Tws.SurveyMonkey.Data.Data
             _logger.Info("Finish Loading Sets");
         }
 
-        public Task InsertResponses(IEnumerable<SMResponse> responses)
-        {
-            string sql = "INSERT INTO Users (UserName) Values (@UserName);";
-            var connection = _connectionFactory.CreateConnection();
-
-            //connection.ExecuteAsync()
-
-            return Task.FromResult(0);
-        }
 
         public Task MergeSMResponse(SMResponse smResponse)
         {
