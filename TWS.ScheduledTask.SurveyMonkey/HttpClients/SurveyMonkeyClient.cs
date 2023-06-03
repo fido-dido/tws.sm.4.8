@@ -12,9 +12,8 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Net;
 using System.IO;
-using Marvin.StreamExtensions;
 using System.Net.Http.Headers;
-
+using Newtonsoft.Json;
 
 namespace TWS.ScheduledTask.SurveyMonkey.HttpClients
 {
@@ -63,13 +62,18 @@ namespace TWS.ScheduledTask.SurveyMonkey.HttpClients
 
                     response = httpClient.GetAsync(request).Result;
 
-                    using (Stream stream = httpClient.GetStreamAsync(request).Result)
-                    {
-                        var result = stream.ReadAndDeserializeFromJson<Survey>();
-                        _logger.Info("GetSurveys End: {@result}", result);
-                        return result;
+                    var content = response.Content.ReadAsStringAsync().Result;
+                    var result = JsonConvert.DeserializeObject<Survey>(content);
 
-                    }
+                    return result;
+
+                    //using (Stream stream = httpClient.GetStreamAsync(request).Result)
+                    //{
+                    //    var result = stream.ReadAndDeserializeFromJson<Survey>();
+                    //    _logger.Info("GetSurveys End: {@result}", result);
+                    //    return result;
+
+                    //}
                 }
                 catch (WebException ex)
                 {
@@ -102,14 +106,18 @@ namespace TWS.ScheduledTask.SurveyMonkey.HttpClients
                     Console.WriteLine(("GetSurveyDetails Start Request"));
 
                     response = httpClient.GetAsync(request).Result;
+                    var content = response.Content.ReadAsStringAsync().Result;
+                    var result = JsonConvert.DeserializeObject<SurveyDetails>(content);
 
-                    using (Stream stream = httpClient.GetStreamAsync(request).Result)
-                    {
-                        var result = stream.ReadAndDeserializeFromJson<SurveyDetails>();
-                        _logger.Info("GetSurveyDetails End: {@result}", result);
-                        return result;
+                    return result;
 
-                    }
+                    //using (Stream stream = httpClient.GetStreamAsync(request).Result)
+                    //{
+                    //    var result = stream.ReadAndDeserializeFromJson<SurveyDetails>();
+                    //    _logger.Info("GetSurveyDetails End: {@result}", result);
+                    //    return result;
+
+                    //}
                 }
                 catch (WebException ex)
                 {
@@ -142,14 +150,18 @@ namespace TWS.ScheduledTask.SurveyMonkey.HttpClients
                     Console.WriteLine(("GetCollectorRecipients Start Request"));
 
                     response = httpClient.GetAsync(request).Result;
+                    var content = response.Content.ReadAsStringAsync().Result;
+                    var result = JsonConvert.DeserializeObject<CollectorRecipient>(content);
 
-                    using (Stream stream = httpClient.GetStreamAsync(request).Result)
-                    {
-                        var result = stream.ReadAndDeserializeFromJson<CollectorRecipient>();
-                        _logger.Info("GetCollectorRecipients End: {@result}", result);
-                        return result;
+                    return result;
 
-                    }
+                    //using (Stream stream = httpClient.GetStreamAsync(request).Result)
+                    //{
+                    //    var result = stream.ReadAndDeserializeFromJson<CollectorRecipient>();
+                    //    _logger.Info("GetCollectorRecipients End: {@result}", result);
+                    //    return result;
+
+                    //}
                 }
                 catch (WebException ex)
                 {
@@ -182,14 +194,18 @@ namespace TWS.ScheduledTask.SurveyMonkey.HttpClients
                     Console.WriteLine(("GetSurveyCollectors Start Request"));
 
                     response = httpClient.GetAsync(request).Result;
+                    var content = response.Content.ReadAsStringAsync().Result;
+                    var result = JsonConvert.DeserializeObject<SurveyCollector>(content);
 
-                    using (Stream stream = httpClient.GetStreamAsync(request).Result)
-                    {
-                        var result = stream.ReadAndDeserializeFromJson<SurveyCollector>();
-                        _logger.Info("GetSurveyCollectors End: {@result}", result);
-                        return result;
+                    return result;
 
-                    }
+                    //using (Stream stream = httpClient.GetStreamAsync(request).Result)
+                    //{
+                    //    var result = stream.ReadAndDeserializeFromJson<SurveyCollector>();
+                    //    _logger.Info("GetSurveyCollectors End: {@result}", result);
+                    //    return result;
+
+                    //}
                 }
                 catch (WebException ex)
                 {
@@ -223,14 +239,18 @@ namespace TWS.ScheduledTask.SurveyMonkey.HttpClients
                     Console.WriteLine(("GetSurveyCollectorMessage Start Request"));
 
                     response = httpClient.GetAsync(request).Result;
+                    var content = response.Content.ReadAsStringAsync().Result;
+                    var result = JsonConvert.DeserializeObject<SurveyMessage>(content);
 
-                    using (Stream stream = httpClient.GetStreamAsync(request).Result)
-                    {
-                        var result = stream.ReadAndDeserializeFromJson<SurveyMessage>();
-                        _logger.Info("GetSurveyCollectorMessage End: {@result}", result);
-                        return result;
+                    return result;
 
-                    }
+                    //using (Stream stream = httpClient.GetStreamAsync(request).Result)
+                    //{
+                    //    var result = stream.ReadAndDeserializeFromJson<SurveyMessage>();
+                    //    _logger.Info("GetSurveyCollectorMessage End: {@result}", result);
+                    //    return result;
+
+                    //}
                 }
                 catch (WebException ex)
                 {
@@ -264,14 +284,18 @@ namespace TWS.ScheduledTask.SurveyMonkey.HttpClients
                     Console.WriteLine(("GetSurveyCollectorMessage Start Request"));
 
                     response = httpClient.GetAsync(request).Result;
+                    var content = response.Content.ReadAsStringAsync().Result;
+                    var result = JsonConvert.DeserializeObject<SurveyMessageDetails>(content);
 
-                    using (Stream stream = httpClient.GetStreamAsync(request).Result)
-                    {
-                        var result = stream.ReadAndDeserializeFromJson<SurveyMessageDetails>();
-                        _logger.Info("GetSurveyCollectorMessage End: {@result}", result);
-                        return result;
+                    return result;
 
-                    }
+                    //using (Stream stream = httpClient.GetStreamAsync(request).Result)
+                    //{
+                    //    var result = stream.ReadAndDeserializeFromJson<SurveyMessageDetails>();
+                    //    _logger.Info("GetSurveyCollectorMessage End: {@result}", result);
+                    //    return result;
+
+                    //}
                 }
                 catch (WebException ex)
                 {

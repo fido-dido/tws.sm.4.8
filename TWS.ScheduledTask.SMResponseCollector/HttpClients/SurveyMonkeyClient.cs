@@ -11,8 +11,8 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Net;
 using System.IO;
-using Marvin.StreamExtensions;
 using System.Net.Http.Headers;
+using Newtonsoft.Json;
 
 namespace TWS.ScheduledTask.SMResponseCollector.HttpClients
 {
@@ -59,13 +59,18 @@ namespace TWS.ScheduledTask.SMResponseCollector.HttpClients
 
                     response = httpClient.GetAsync(request).Result;
 
-                    using (Stream stream = httpClient.GetStreamAsync(request).Result)
-                    {
-                        var result = stream.ReadAndDeserializeFromJson<Survey>();
-                        _logger.Info("GetSurveys End: {@result}", result);
-                        return result;
+                    var content = response.Content.ReadAsStringAsync().Result;
+                    var result = JsonConvert.DeserializeObject<Survey>(content);
 
-                    }
+                    return result;
+
+                    //using (Stream stream = httpClient.GetStreamAsync(request).Result)
+                    //{
+                    //    var result = new Survey();// stream.ReadAndDeserializeFromJson<Survey>();
+                    //    _logger.Info("GetSurveys End: {@result}", result);
+                    //    return result;
+
+                    //}
                 }
                 catch (WebException ex)
                 {
@@ -99,13 +104,18 @@ namespace TWS.ScheduledTask.SMResponseCollector.HttpClients
 
                     response = httpClient.GetAsync(request).Result;
 
-                    using (Stream stream = httpClient.GetStreamAsync(request).Result)
-                    {
-                        var result = stream.ReadAndDeserializeFromJson<SurveyResponse>();
-                        _logger.Info("GetSurveyResponses End: {@result}", result);
-                        return result;
+                    var content = response.Content.ReadAsStringAsync().Result;
+                    var result = JsonConvert.DeserializeObject<SurveyResponse>(content);
 
-                    }
+                    return result;
+
+                    //using (Stream stream = httpClient.GetStreamAsync(request).Result)
+                    //{
+                    //    var result = new SurveyResponse();// stream.ReadAndDeserializeFromJson<SurveyResponse>();
+                    //    _logger.Info("GetSurveyResponses End: {@result}", result);
+                    //    return result;
+
+                    //}
                 }
                 catch (WebException ex)
                 {
