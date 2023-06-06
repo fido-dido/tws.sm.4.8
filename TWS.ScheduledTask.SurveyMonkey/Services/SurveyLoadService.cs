@@ -37,14 +37,14 @@ namespace TWS.ScheduledTask.SurveyMonkey.Services
             }
 
             var currentSurveyPage = 1;
-            var surveysFromSM = await httpClient.GetSurveys(currentSurveyPage, _cancellationTokenSource.Token);
+            var surveysFromSM = httpClient.GetSurveys(currentSurveyPage, _cancellationTokenSource.Token);
 
             if (surveysFromSM != null && surveysFromSM.data.Count() > 0)
             {
                 LoadSurveysByPage(surveysFromSM.data);
                 while (surveysFromSM?.links.next != null)
                 {
-                    surveysFromSM = await httpClient.GetSurveys(++currentSurveyPage, _cancellationTokenSource.Token);
+                    surveysFromSM = httpClient.GetSurveys(++currentSurveyPage, _cancellationTokenSource.Token);
                     if (surveysFromSM != null)
                         LoadSurveysByPage(surveysFromSM.data);
                 }
@@ -52,25 +52,25 @@ namespace TWS.ScheduledTask.SurveyMonkey.Services
             _logger.Info("SurveyLoadService End Run");
         }
 
-        private async void LoadSurveysByPage(IEnumerable<Datum> surveysFromSM)
+        private void LoadSurveysByPage(IEnumerable<Datum> surveysFromSM)
         {
             _logger.Info("LoadSurveysByPage Start");
             foreach (var survey in surveysFromSM)
             {
-                await LoadSurveyDetails(survey);
+                LoadSurveyDetails(survey);
                 
             }
             _logger.Info("LoadSurveysByPage End");
         }
 
-        public async Task LoadSurveyDetails(Datum surveysFromSM)
+        public void LoadSurveyDetails(Datum surveysFromSM)
         {
             //todo: add try/catch
             _logger.Info("LoadSurveyDetails Start");
 
             try
             {
-                var surveyDetailsSM = await httpClient.GetSurveyDetails(surveysFromSM.id, _cancellationTokenSource.Token);
+                var surveyDetailsSM = httpClient.GetSurveyDetails(surveysFromSM.id, _cancellationTokenSource.Token);
 
 
                 if (surveyDetailsSM != null)
@@ -82,7 +82,7 @@ namespace TWS.ScheduledTask.SurveyMonkey.Services
 
                     smSurvey = _repository.SurveySet.Item(smSurvey).GetAwaiter().GetResult();
 
-                    await LoadSurveyCollectors(smSurvey);
+                    LoadSurveyCollectors(smSurvey);
 
                     foreach (var page in surveyDetailsSM.pages)
                     {
@@ -117,10 +117,10 @@ namespace TWS.ScheduledTask.SurveyMonkey.Services
             _logger.Info("LoadSurveyDetails End");
         }
 
-        public async Task LoadSurveyCollectors(SMSurvey survey)
+        public void LoadSurveyCollectors(SMSurvey survey)
         {
             _logger.Info("LoadSurveyCollectors Start");
-            var surveyCollectorsSM = await httpClient.GetSurveyCollectors(survey.ObjectId, _cancellationTokenSource.Token);
+            var surveyCollectorsSM = httpClient.GetSurveyCollectors(survey.ObjectId, _cancellationTokenSource.Token);
 
             if (surveyCollectorsSM != null)
             {
@@ -129,17 +129,17 @@ namespace TWS.ScheduledTask.SurveyMonkey.Services
                     SMCollector smCollector = new SMCollector(collector.id, survey.Id, collector.name, collector.type, collector.email);
                     smCollector =  _repository.SurveyCollectorSet.Item(smCollector).GetAwaiter().GetResult();
 
-                    await LoadCollectorRecipients(smCollector);
-                    await LoadCollectorMessages(smCollector);
+                    LoadCollectorRecipients(smCollector);
+                    LoadCollectorMessages(smCollector);
                 }
             }
             _logger.Info("LoadSurveyCollectors End");
         }
 
-        public async Task LoadCollectorRecipients(SMCollector smCollector)
+        public void LoadCollectorRecipients(SMCollector smCollector)
         {
             _logger.Info("LoadCollectorRecipients Start");
-            var collector = await httpClient.GetCollectorRecipients(smCollector.ObjectId, _cancellationTokenSource.Token);
+            var collector = httpClient.GetCollectorRecipients(smCollector.ObjectId, _cancellationTokenSource.Token);
 
             foreach (var recipient in collector.data)
             {
@@ -149,14 +149,14 @@ namespace TWS.ScheduledTask.SurveyMonkey.Services
             _logger.Info("LoadCollectorRecipients end");
         }
 
-        public async Task LoadCollectorMessages(SMCollector smCollector)
+        public void LoadCollectorMessages(SMCollector smCollector)
         {
             _logger.Info("LoadCollectorMessages Start");
-            var message = await httpClient.GetSurveyCollectorMessages(smCollector.ObjectId, _cancellationTokenSource.Token);
+            var message = httpClient.GetSurveyCollectorMessages(smCollector.ObjectId, _cancellationTokenSource.Token);
 
             foreach(var m in message.data)
             {
-                var surveyMessageDetail = await httpClient.GetSurveyCollectorMessageDetails(smCollector.ObjectId, m.id, _cancellationTokenSource.Token);
+                var surveyMessageDetail = httpClient.GetSurveyCollectorMessageDetails(smCollector.ObjectId, m.id, _cancellationTokenSource.Token);
                 var dbMessage = new SMMessage(surveyMessageDetail.id, smCollector.Id, surveyMessageDetail.status, surveyMessageDetail.is_scheduled, surveyMessageDetail.embed_first_question, surveyMessageDetail.subject, surveyMessageDetail.body, surveyMessageDetail.type, DateTime.Now);
                 _repository.MergeSMMessage(dbMessage).GetAwaiter().GetResult();
             }

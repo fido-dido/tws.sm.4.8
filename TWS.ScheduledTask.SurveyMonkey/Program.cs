@@ -11,8 +11,6 @@ namespace TWS.ScheduledTask.SurveyMonkey
     public class Program
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-        private readonly SurveyLoadService
-            _service;
         public static void Main(string[] args)
         {
             try

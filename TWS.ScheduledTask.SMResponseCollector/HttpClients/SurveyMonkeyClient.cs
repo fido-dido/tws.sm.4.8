@@ -35,7 +35,7 @@ namespace TWS.ScheduledTask.SMResponseCollector.HttpClients
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _clientOptions.AccessToken);
         }
 
-        public async Task<Survey> GetSurveys(int currentPage, CancellationToken cancellationToken)
+        public Survey GetSurveys(int currentPage, CancellationToken cancellationToken)
         {
             _logger.Info("GetSurveys Start");
 
@@ -87,7 +87,7 @@ namespace TWS.ScheduledTask.SMResponseCollector.HttpClients
             return null;
         }
 
-        public async Task<SurveyResponse> GetSurveyResponses(string surveyId, CancellationToken cancellationToken)
+        public SurveyResponse GetSurveyResponses(string surveyId, CancellationToken cancellationToken)
         {
             _logger.Info("GetSurveyResponses End");
             WebRequestHandler handler = new WebRequestHandler();

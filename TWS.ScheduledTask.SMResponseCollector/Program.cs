@@ -5,14 +5,12 @@ using System;
 using System.Configuration;
 using Tws.SurveyMonkey.Data;
 using TWS.ScheduledTask.SMResponseCollector.Services;
-using TWS.ScheduledTask.SMResponseCollector.Services;
 
 namespace TWS.ScheduledTask.SMResponseCollector
 {
     public class Program
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-        private readonly SurveyResponseCollectorLoadService  _service;
         public static void Main(string[] args)
         {
             try

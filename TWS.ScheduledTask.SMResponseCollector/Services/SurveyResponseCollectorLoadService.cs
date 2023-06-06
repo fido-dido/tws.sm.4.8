@@ -39,14 +39,14 @@ namespace TWS.ScheduledTask.SMResponseCollector.Services
            
 
             var currentSurveyPage = 1;
-            var surveysFromSM = await httpClient.GetSurveys(currentSurveyPage, _cancellationTokenSource.Token);
+            var surveysFromSM = httpClient.GetSurveys(currentSurveyPage, _cancellationTokenSource.Token);
 
             if (surveysFromSM != null && surveysFromSM.data.Count() > 0)
             {
                 LoadResponsesByPage(surveysFromSM.data);
                 while (surveysFromSM?.links.next != null)
                 {
-                    surveysFromSM = await httpClient.GetSurveys(++currentSurveyPage, _cancellationTokenSource.Token);
+                    surveysFromSM = httpClient.GetSurveys(++currentSurveyPage, _cancellationTokenSource.Token);
                     if (surveysFromSM != null)
                         LoadResponsesByPage(surveysFromSM.data);
                 }
@@ -54,19 +54,19 @@ namespace TWS.ScheduledTask.SMResponseCollector.Services
             _logger.Info("SurveyResponseCollectorLoadService End Run");
         }
 
-        private async void LoadResponsesByPage(IEnumerable<Datum> surveysFromSM)
+        private void LoadResponsesByPage(IEnumerable<Datum> surveysFromSM)
         {
             _logger.Info("SurveyResponseCollectorLoadService LoadResponsesByPage Start");
             foreach (var survey in surveysFromSM)
             {
-                await LoadResponse(survey);
+                LoadResponse(survey);
             }
             _logger.Info("SurveyResponseCollectorLoadService LoadResponsesByPage End");
         }
 
-        public async Task LoadResponse(Datum surveysFromSM)
+        public void LoadResponse(Datum surveysFromSM)
         {
-            var surveyReponsesSM = await httpClient.GetSurveyResponses(surveysFromSM.id, _cancellationTokenSource.Token);
+            var surveyReponsesSM = httpClient.GetSurveyResponses(surveysFromSM.id, _cancellationTokenSource.Token);
 
             if (surveyReponsesSM != null)
             {

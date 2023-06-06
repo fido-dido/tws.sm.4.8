@@ -38,7 +38,7 @@ namespace TWS.ScheduledTask.SurveyMonkey.HttpClients
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _clientOptions.AccessToken);
         }
 
-        public async Task<Survey> GetSurveys(int currentPage, CancellationToken cancellationToken)
+        public Survey GetSurveys(int currentPage, CancellationToken cancellationToken)
         {
             _logger.Info("GetSurveys Start");
 
@@ -90,7 +90,7 @@ namespace TWS.ScheduledTask.SurveyMonkey.HttpClients
             return null;
         }
 
-        public async Task<SurveyDetails> GetSurveyDetails(string surveyId, CancellationToken cancellationToken)
+        public SurveyDetails GetSurveyDetails(string surveyId, CancellationToken cancellationToken)
         {
             _logger.Info("GetSurveyDetails Start");
             WebRequestHandler handler = new WebRequestHandler();
@@ -134,7 +134,7 @@ namespace TWS.ScheduledTask.SurveyMonkey.HttpClients
             return null;
         }
 
-        public async Task<CollectorRecipient> GetCollectorRecipients(string collectorId, CancellationToken cancellationToken)
+        public CollectorRecipient GetCollectorRecipients(string collectorId, CancellationToken cancellationToken)
         {
             _logger.Info("GetCollectorRecipients Start");
             WebRequestHandler handler = new WebRequestHandler();
@@ -178,7 +178,7 @@ namespace TWS.ScheduledTask.SurveyMonkey.HttpClients
             return null;
         }
 
-        public async Task<SurveyCollector> GetSurveyCollectors(string surveyId, CancellationToken cancellationToken)
+        public SurveyCollector GetSurveyCollectors(string surveyId, CancellationToken cancellationToken)
         {
             _logger.Info("GetSurveyCollectors End");
             WebRequestHandler handler = new WebRequestHandler();
@@ -223,7 +223,7 @@ namespace TWS.ScheduledTask.SurveyMonkey.HttpClients
 
         }
 
-        public async Task<SurveyMessage> GetSurveyCollectorMessages(string collectorId, CancellationToken cancellationToken)
+        public SurveyMessage GetSurveyCollectorMessages(string collectorId, CancellationToken cancellationToken)
         {
             _logger.Info("GetSurveyCollectorMessage End");
             WebRequestHandler handler = new WebRequestHandler();
@@ -268,7 +268,7 @@ namespace TWS.ScheduledTask.SurveyMonkey.HttpClients
 
         }
 
-        public async Task<SurveyMessageDetails> GetSurveyCollectorMessageDetails(string collectorId, string messageId, CancellationToken cancellationToken)
+        public SurveyMessageDetails GetSurveyCollectorMessageDetails(string collectorId, string messageId, CancellationToken cancellationToken)
         {
             _logger.Info("GetSurveyCollectorMessage End");
             WebRequestHandler handler = new WebRequestHandler();
