@@ -124,6 +124,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="SQL\DeleteAndDropTables.sql" />
     <Content Include="SQL\CreateDB.sql" />
   </ItemGroup>
   <ItemGroup>
