@@ -63,6 +63,11 @@ BEGIN
 END
 GO
 
+IF EXISTS(SELECT * FROM sys.indexes WHERE object_id = object_id('dbo.SMRecipient') AND NAME ='UNCI_RecipientEntityId')
+	CREATE UNIQUE NONCLUSTERED INDEX UNCI_RecipientEntityId ON [dbo].[SMRecipient] ([RecipientEntityId] ASC) 
+GO
+
+
 IF NOT EXISTS (SELECT * FROM sys.tables t  
 				JOIN sys.schemas s ON (t.schema_id = s.schema_id) 
 				WHERE s.name = 'dbo' AND t.name = 'SMPage')
@@ -81,6 +86,10 @@ BEGIN
 	ALTER TABLE [dbo].[SMPage]  WITH CHECK ADD FOREIGN KEY([SMSurveyId])
 	REFERENCES [dbo].[SMSurvey] ([Id]) ON DELETE CASCADE
 END
+GO
+
+IF EXISTS(SELECT * FROM sys.indexes WHERE object_id = object_id('dbo.SMPage') AND NAME ='UNCI_PageEntityId')
+	CREATE UNIQUE NONCLUSTERED INDEX UNCI_PageEntityId ON [dbo].[SMPage] ([PageEntityId] ASC) 
 GO
 
 IF NOT EXISTS (SELECT * FROM sys.tables t  
@@ -102,6 +111,10 @@ BEGIN
 END
 GO
 
+IF EXISTS(SELECT * FROM sys.indexes WHERE object_id = object_id('dbo.SMQuestion') AND NAME ='UNCI_QuestionEntityId')
+	CREATE UNIQUE NONCLUSTERED INDEX UNCI_QuestionEntityId ON [dbo].[SMQuestion] ([QuestionEntityId] ASC) 
+GO
+
 IF NOT EXISTS (SELECT * FROM sys.tables t  
 				JOIN sys.schemas s ON (t.schema_id = s.schema_id) 
 				WHERE s.name = 'dbo' AND t.name = 'SMChoice')
@@ -118,6 +131,10 @@ BEGIN
 	ALTER TABLE [dbo].[SMChoice]  WITH CHECK ADD FOREIGN KEY([SMQuestionId])
 	REFERENCES [dbo].[SMQuestion] ([Id])
 END
+GO
+
+IF EXISTS(SELECT * FROM sys.indexes WHERE object_id = object_id('dbo.SMChoice') AND NAME ='UNCI_ChoiceEntityId')
+	CREATE UNIQUE NONCLUSTERED INDEX UNCI_ChoiceEntityId ON [dbo].[SMChoice] ([ChoiceEntityId] ASC) 
 GO
 
 IF NOT EXISTS (SELECT * FROM sys.tables t  
@@ -140,6 +157,10 @@ BEGIN
 	)
 
 END
+GO
+
+IF EXISTS(SELECT * FROM sys.indexes WHERE object_id = object_id('dbo.SMResponse') AND NAME ='UNCI_ResponseEntityId')
+	CREATE UNIQUE NONCLUSTERED INDEX UNCI_ResponseEntityId ON [dbo].[SMResponse] ([ResponseEntityId] ASC) 
 GO
 
 IF NOT EXISTS (SELECT * FROM sys.tables t  
